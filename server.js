@@ -18,9 +18,7 @@
   OneSignalDeferred.push(function(OneSignal) {
     OneSignal.init({
       appId: "PASTE_YOUR_ONESIGNAL_APP_ID_HERE",
-      notifyButton: {
-        enable: false // We use custom button
-      }
+      notifyButton: { enable: false }
     });
   });
 </script>
@@ -187,6 +185,8 @@
 
 <script>
 const YOUTUBE_CHANNEL = "https://www.youtube.com/@EmmieShukie";
+
+// REPLACE UC WITH YOUR REAL CHANNEL ID from YouTube Studio > Settings > Channel > Advanced
 const CHANNEL_ID = "UC"; 
 const CHANNEL_EMBED = `https://www.youtube.com/embed/live_stream?channel=${CHANNEL_ID}&autoplay=1&mute=0`;
 
@@ -274,14 +274,13 @@ shareBtn.addEventListener('click', async () => {
   }
 });
 
-// ONESIGNAL NOTIFICATION BELL
+// ONESIGNAL BELL
 bellBtn.addEventListener('click', async () => {
   OneSignalDeferred.push(function(OneSignal) {
     OneSignal.showSlidedownPrompt();
   });
 });
 
-// Update bell state
 OneSignalDeferred.push(async function(OneSignal) {
   const isSubscribed = await OneSignal.isPushNotificationsEnabled();
   if (isSubscribed) {
