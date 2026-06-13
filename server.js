@@ -39,6 +39,28 @@
   header h1 { font-size: 32px; letter-spacing: 2px; }
   header p { opacity: 0.9; margin-top: 5px; font-size: 14px; }
   
+  .admin-panel {
+    background: #1a1a1a;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #c41e3a;
+    display: none;
+  }
+  .admin-panel h3 { color: #c41e3a; margin-bottom: 10px; }
+  .admin-btn {
+    background: #c41e3a;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .admin-btn:hover { background: #ff2a4a; }
+  
   .btn-group {
     position: fixed;
     bottom: 20px;
@@ -165,6 +187,14 @@
   <p>Powered by Emmie Shukie</p>
 </header>
 
+<!-- ADMIN PANEL - Add ?admin to URL to show this -->
+<div class="admin-panel" id="adminPanel">
+  <h3>🔐 Admin Panel - Send Live Alert</h3>
+  <p>Click below to notify all subscribers "TRUTH TV UG is LIVE NOW"</p>
+  <button class="admin-btn" onclick="sendLiveAlert()">📢 Send Live Notification</button>
+  <p style="font-size:12px; opacity:0.6; margin-top:10px;">Note: This opens OneSignal dashboard. You need to be logged in there.</p>
+</div>
+
 <div class="btn-group">
   <button id="bellBtn" class="action-btn bell-btn">🔔 Get Live Alerts</button>
   <button id="installBtn" class="action-btn">📲 Install App</button>
@@ -184,10 +214,10 @@
 </footer>
 
 <script>
+// CONFIG - CHANGE THESE 2 LINES
 const YOUTUBE_CHANNEL = "https://www.youtube.com/@EmmieShukie";
+const CHANNEL_ID = "UC"; // REPLACE WITH YOUR YOUTUBE CHANNEL ID
 
-// REPLACE UC WITH YOUR REAL CHANNEL ID from YouTube Studio > Settings > Channel > Advanced
-const CHANNEL_ID = "UC"; 
 const CHANNEL_EMBED = `https://www.youtube.com/embed/live_stream?channel=${CHANNEL_ID}&autoplay=1&mute=0`;
 
 const channels = [
@@ -233,6 +263,17 @@ function closePlayer() {
 document.addEventListener('keydown', e => {
   if(e.key === 'Escape') closePlayer();
 });
+
+// SHOW ADMIN PANEL IF URL HAS ?admin
+if (window.location.search.includes('admin')) {
+  document.getElementById('adminPanel').style.display = 'block';
+}
+
+// ADMIN FUNCTION - OPENS ONESIGNAL DASHBOARD
+function sendLiveAlert() {
+  alert('Opening OneSignal dashboard...\\n\\n1. Login to OneSignal\\n2. Click Messages > New Push\\n3. Title: TRUTH TV UG is LIVE NOW!\\n4. Message: Tune in to watch Emmie Shukie live\\n5. Send to All Users');
+  window.open('https://app.onesignal.com/', '_blank');
+}
 
 // BUTTON LOGIC
 let deferredPrompt;
